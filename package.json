@@ -1,0 +1,20 @@
+{
+  "name": "bluetooth-beacon-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@abandonware/noble": "^1.9.2-19",
+    "firebase": "^9.16.0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "http": "^0.0.1-security"
+  }
+}
