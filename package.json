@@ -11,6 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "@abandonware/noble": "^1.9.2-19",
+    "async": "^3.2.4",
+    "await": "^0.2.6",
+    "export": "^0.1.337",
     "firebase": "^9.16.0"
   },
   "type": "module",
