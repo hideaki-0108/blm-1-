@@ -134,32 +134,56 @@ const detabase = async (element, device) => {
 
 //見つかったbluetoothデバイスが格納されます。
 let knownDevices = [];
-
+let i = 0;
+console.log(i);
 //bluetoothデバイスデータを処理
 const discovered = (peripheral) => {
-  //繰り返し処理
-  // setInterval(() => {
-  knownDevices = [];
+  //初回の処理
+  if (i <= 0) {
+    setTimeout(() => {
+      i += 1;
+      const device = {
+        name: peripheral.advertisement.localName,
+        uuid: peripheral.uuid,
+        rssi: peripheral.rssi,
+      };
+      knownDevices.push(device);
 
-  // setTimeout(() => {
-  const device = {
-    name: peripheral.advertisement.localName,
-    uuid: peripheral.uuid,
-    rssi: peripheral.rssi,
-  };
-  knownDevices.push(device);
+      for (let i = 0; i < studentServiceUUids.length; i++) {
+        const element = studentServiceUUids[i];
+        if (peripheral.advertisement.serviceUuids == element) {
+          // console.log(`${device.name}:UUID:${device.uuid}:${device.rssi}`);
 
-  for (let i = 0; i < studentServiceUUids.length; i++) {
-    const element = studentServiceUUids[i];
-    if (peripheral.advertisement.serviceUuids == element) {
-      console.log(`${device.name}:UUID:${device.uuid}:${device.rssi}`);
-
-      detabase(element, device);
-    }
+          detabase(element, device);
+        }
+      }
+    }, 1000);
   }
 
-  //！=====繰り返し処理はここまで
+  //繰り返し処理
+  setInterval(() => {
+    knownDevices = [];
+
+    const device = {
+      name: peripheral.advertisement.localName,
+      uuid: peripheral.uuid,
+      rssi: peripheral.rssi,
+    };
+    knownDevices.push(device);
+
+    for (let i = 0; i < studentServiceUUids.length; i++) {
+      const element = studentServiceUUids[i];
+      if (peripheral.advertisement.serviceUuids == element) {
+        console.log(`${device.name}:UUID:${device.uuid}:${device.rssi}`);
+
+        detabase(element, device);
+      }
+    }
+
+    //！=====繰り返し処理はここまで
+  }, 1800000);
   // }, 5000);
+
   peripheral.connect();
   // console.log('=======! scan stop !=======');
 };
